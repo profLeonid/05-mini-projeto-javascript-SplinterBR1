@@ -10,7 +10,7 @@ const retorno = document.getElementById('retorno')
 function financiamento() {
     simulacao.textContent = ''
 
-    if (valorTotal.value == '' || parcelas.value == '' || juros.value == '' || valorParcela.value == '') {
+    if (valorTotal.value == '' || parcelas.value == '' || juros.value == '') {
         retorno.textContent = 'Por favor preencha todas as informações acima para prosseguir!'
     }
 
@@ -19,6 +19,7 @@ function financiamento() {
         let saldoDevedor = parseFloat(valorTotal.value)
         let taxa = parseFloat(juros.value) / 100
         let jurosMes = saldoDevedor * taxa
+        valorParcela.value = parseFloat(valorTotal.value) / parseFloat(parcelas.value)
 
         for (let i = 1; i <= parseFloat(parcelas.value); i++) {
             let novaLinha = document.createElement('tr')
@@ -42,7 +43,7 @@ function financiamento() {
             celulaMes.textContent = i
             jurosMes = saldoDevedor * taxa
             let totalMensal = parseFloat(valorParcela.value) + jurosMes
-            saldoDevedor = saldoDevedor + jurosMes - parseFloat(valorParcela.value)
+            saldoDevedor = saldoDevedor - parseFloat(valorParcela.value)
             
             celulaParcela.textContent = parseFloat(valorParcela.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
